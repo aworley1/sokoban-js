@@ -19,6 +19,7 @@ this['sokoban-js'] = function (_, Kotlin) {
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var Unit = Kotlin.kotlin.Unit;
   var EventListener = Kotlin.org.w3c.dom.events.EventListener_gbr1zf$;
+  var throwCCE = Kotlin.throwCCE;
   var appendText = Kotlin.kotlin.dom.appendText_46n0ku$;
   Direction.prototype = Object.create(Enum.prototype);
   Direction.prototype.constructor = Direction;
@@ -243,7 +244,6 @@ this['sokoban-js'] = function (_, Kotlin) {
   };
   var NoSuchElementException_init = Kotlin.kotlin.NoSuchElementException;
   var Any = Object;
-  var throwCCE = Kotlin.throwCCE;
   Board.prototype.getPlayerSquare = function () {
     var tmp$, tmp$_0;
     var single = null;
@@ -678,6 +678,28 @@ this['sokoban-js'] = function (_, Kotlin) {
       return Unit;
     };
   }
+  function main$lambda$lambda_3(closure$board) {
+    return function (it) {
+      var tmp$;
+      var event = Kotlin.isType(tmp$ = it, KeyboardEvent) ? tmp$ : throwCCE();
+      switch (event.keyCode) {
+        case 38:
+          closure$board.v = processSokobanMove(closure$board.v, 117);
+          break;
+        case 40:
+          closure$board.v = processSokobanMove(closure$board.v, 100);
+          break;
+        case 37:
+          closure$board.v = processSokobanMove(closure$board.v, 108);
+          break;
+        case 39:
+          closure$board.v = processSokobanMove(closure$board.v, 114);
+          break;
+      }
+      printBoard(closure$board.v);
+      return Unit;
+    };
+  }
   function main$lambda(closure$board) {
     return function (it) {
       var tmp$, tmp$_0, tmp$_1, tmp$_2;
@@ -689,7 +711,9 @@ this['sokoban-js'] = function (_, Kotlin) {
       (tmp$ = document.getElementById('right')) != null ? (tmp$.addEventListener('click', rightEventListener), Unit) : null;
       (tmp$_0 = document.getElementById('left')) != null ? (tmp$_0.addEventListener('click', leftEventListener), Unit) : null;
       (tmp$_1 = document.getElementById('up')) != null ? (tmp$_1.addEventListener('click', upEventListener), Unit) : null;
-      return (tmp$_2 = document.getElementById('down')) != null ? (tmp$_2.addEventListener('click', downEventListener), Unit) : null;
+      (tmp$_2 = document.getElementById('down')) != null ? (tmp$_2.addEventListener('click', downEventListener), Unit) : null;
+      window.addEventListener('keydown', main$lambda$lambda_3(closure$board));
+      return Unit;
     };
   }
   function main() {

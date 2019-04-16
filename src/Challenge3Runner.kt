@@ -1,6 +1,7 @@
 package challenge_three
 
 import org.w3c.dom.events.EventListener
+import org.w3c.dom.events.KeyboardEvent
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.dom.appendText
@@ -42,6 +43,17 @@ fun main() {
         document.getElementById("left")?.addEventListener("click", leftEventListener)
         document.getElementById("up")?.addEventListener("click", upEventListener)
         document.getElementById("down")?.addEventListener("click", downEventListener)
+
+        window.addEventListener("keydown", {
+            val event = it as KeyboardEvent
+            when (event.keyCode) {
+                38 -> board = processSokobanMove(board, 'u')
+                40 -> board = processSokobanMove(board, 'd')
+                37 -> board = processSokobanMove(board, 'l')
+                39 -> board = processSokobanMove(board, 'r')
+            }
+            printBoard(board)
+        })
 
     }
 
