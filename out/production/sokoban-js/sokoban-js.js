@@ -16,10 +16,12 @@ this['sokoban-js'] = function (_, Kotlin) {
   var IllegalArgumentException_init = Kotlin.kotlin.IllegalArgumentException_init_pdl1vj$;
   var Exception_init = Kotlin.kotlin.Exception_init;
   var Exception = Kotlin.kotlin.Exception;
+  var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
   var Unit = Kotlin.kotlin.Unit;
   var EventListener = Kotlin.org.w3c.dom.events.EventListener_gbr1zf$;
   var throwCCE = Kotlin.throwCCE;
+  var split = Kotlin.kotlin.text.split_ip8yn$;
   var appendText = Kotlin.kotlin.dom.appendText_46n0ku$;
   Direction.prototype = Object.create(Enum.prototype);
   Direction.prototype.constructor = Direction;
@@ -650,77 +652,91 @@ this['sokoban-js'] = function (_, Kotlin) {
     simpleName: 'IllegalMoveException',
     interfaces: [Exception]
   };
-  function main$lambda$lambda(closure$board) {
-    return function (it) {
-      closure$board.v = processSokobanMove(closure$board.v, 114);
-      printBoard(closure$board.v);
-      return Unit;
-    };
+  function Game() {
+    Game_instance = this;
+    this.board = emptyList();
   }
-  function main$lambda$lambda_0(closure$board) {
-    return function (it) {
-      closure$board.v = processSokobanMove(closure$board.v, 108);
-      printBoard(closure$board.v);
-      return Unit;
-    };
+  Game.$metadata$ = {
+    kind: Kind_OBJECT,
+    simpleName: 'Game',
+    interfaces: []
+  };
+  var Game_instance = null;
+  function Game_getInstance() {
+    if (Game_instance === null) {
+      new Game();
+    }
+    return Game_instance;
   }
-  function main$lambda$lambda_1(closure$board) {
-    return function (it) {
-      closure$board.v = processSokobanMove(closure$board.v, 117);
-      printBoard(closure$board.v);
-      return Unit;
-    };
+  function main$lambda$lambda(it) {
+    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 114);
+    printBoard(Game_getInstance().board);
+    return Unit;
   }
-  function main$lambda$lambda_2(closure$board) {
-    return function (it) {
-      closure$board.v = processSokobanMove(closure$board.v, 100);
-      printBoard(closure$board.v);
-      return Unit;
-    };
+  function main$lambda$lambda_0(it) {
+    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 108);
+    printBoard(Game_getInstance().board);
+    return Unit;
   }
-  function main$lambda$lambda_3(closure$board) {
-    return function (it) {
-      var tmp$;
-      var event = Kotlin.isType(tmp$ = it, KeyboardEvent) ? tmp$ : throwCCE();
-      switch (event.keyCode) {
-        case 38:
-          closure$board.v = processSokobanMove(closure$board.v, 117);
-          break;
-        case 40:
-          closure$board.v = processSokobanMove(closure$board.v, 100);
-          break;
-        case 37:
-          closure$board.v = processSokobanMove(closure$board.v, 108);
-          break;
-        case 39:
-          closure$board.v = processSokobanMove(closure$board.v, 114);
-          break;
-      }
-      printBoard(closure$board.v);
-      return Unit;
-    };
+  function main$lambda$lambda_1(it) {
+    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 117);
+    printBoard(Game_getInstance().board);
+    return Unit;
   }
-  function main$lambda(closure$board) {
-    return function (it) {
-      var tmp$, tmp$_0, tmp$_1, tmp$_2;
-      printBoard(closure$board.v);
-      var rightEventListener = EventListener(main$lambda$lambda(closure$board));
-      var leftEventListener = EventListener(main$lambda$lambda_0(closure$board));
-      var upEventListener = EventListener(main$lambda$lambda_1(closure$board));
-      var downEventListener = EventListener(main$lambda$lambda_2(closure$board));
-      (tmp$ = document.getElementById('right')) != null ? (tmp$.addEventListener('click', rightEventListener), Unit) : null;
-      (tmp$_0 = document.getElementById('left')) != null ? (tmp$_0.addEventListener('click', leftEventListener), Unit) : null;
-      (tmp$_1 = document.getElementById('up')) != null ? (tmp$_1.addEventListener('click', upEventListener), Unit) : null;
-      (tmp$_2 = document.getElementById('down')) != null ? (tmp$_2.addEventListener('click', downEventListener), Unit) : null;
-      window.addEventListener('keydown', main$lambda$lambda_3(closure$board));
-      return Unit;
-    };
+  function main$lambda$lambda_2(it) {
+    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 100);
+    printBoard(Game_getInstance().board);
+    return Unit;
+  }
+  function main$lambda$lambda_3(it) {
+    var tmp$;
+    var textArea = Kotlin.isType(tmp$ = document.getElementById('board'), HTMLTextAreaElement) ? tmp$ : throwCCE();
+    console.log('Cooey');
+    Game_getInstance().board = split(textArea.value, ['\n']);
+    printBoard(Game_getInstance().board);
+    return Unit;
+  }
+  function main$lambda$lambda_4(it) {
+    var tmp$;
+    var event = Kotlin.isType(tmp$ = it, KeyboardEvent) ? tmp$ : throwCCE();
+    switch (event.keyCode) {
+      case 38:
+        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 117);
+        break;
+      case 40:
+        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 100);
+        break;
+      case 37:
+        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 108);
+        break;
+      case 39:
+        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 114);
+        break;
+    }
+    printBoard(Game_getInstance().board);
+    return Unit;
+  }
+  function main$lambda(it) {
+    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
+    printBoard(Game_getInstance().board);
+    var rightEventListener = EventListener(main$lambda$lambda);
+    var leftEventListener = EventListener(main$lambda$lambda_0);
+    var upEventListener = EventListener(main$lambda$lambda_1);
+    var downEventListener = EventListener(main$lambda$lambda_2);
+    var updateBoardEventListener = EventListener(main$lambda$lambda_3);
+    (tmp$ = document.getElementById('right')) != null ? (tmp$.addEventListener('click', rightEventListener), Unit) : null;
+    (tmp$_0 = document.getElementById('left')) != null ? (tmp$_0.addEventListener('click', leftEventListener), Unit) : null;
+    (tmp$_1 = document.getElementById('up')) != null ? (tmp$_1.addEventListener('click', upEventListener), Unit) : null;
+    (tmp$_2 = document.getElementById('down')) != null ? (tmp$_2.addEventListener('click', downEventListener), Unit) : null;
+    (tmp$_3 = document.getElementById('readBoard')) != null ? (tmp$_3.addEventListener('click', updateBoardEventListener), Unit) : null;
+    window.addEventListener('keydown', main$lambda$lambda_4);
+    return Unit;
   }
   function main() {
     var initialBoard = listOf(['#######################', '#pb                *  #', '#                  #  #', '# b                #  #', '#         *        #  #', '#                  #  #', '#                  #  #', '#######################']);
-    var board = {v: initialBoard};
-    window.onload = main$lambda(board);
-    printBoard(board.v);
+    Game_getInstance().board = initialBoard;
+    window.onload = main$lambda;
+    printBoard(Game_getInstance().board);
     console.log('Hi!');
   }
   function printBoard(board) {
@@ -778,6 +794,9 @@ this['sokoban-js'] = function (_, Kotlin) {
   package$challenge_three.SquareType = SquareType;
   package$challenge_three.processSokobanMove_ilwz0q$ = processSokobanMove;
   package$challenge_three.IllegalMoveException = IllegalMoveException;
+  Object.defineProperty(package$challenge_three, 'Game', {
+    get: Game_getInstance
+  });
   package$challenge_three.main = main;
   package$challenge_three.printBoard_mhpeer$ = printBoard;
   main();

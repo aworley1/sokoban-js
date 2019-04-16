@@ -1,10 +1,16 @@
 package challenge_three
 
+import challenge_three.Game.board
+import org.w3c.dom.HTMLTextAreaElement
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.events.KeyboardEvent
 import kotlin.browser.document
 import kotlin.browser.window
 import kotlin.dom.appendText
+
+object Game {
+    var board: List<String> = emptyList()
+}
 
 fun main() {
     val initialBoard = listOf(
@@ -18,10 +24,11 @@ fun main() {
             "#######################"
     )
 
-    var board = initialBoard
+    Game.board = initialBoard
 
     window.onload = {
         printBoard(board)
+
         val rightEventListener = EventListener {
             board = processSokobanMove(board, 'r')
             printBoard(board)
@@ -39,10 +46,17 @@ fun main() {
             printBoard(board)
         }
 
+        val updateBoardEventListener = EventListener {
+            val textArea = document.getElementById("board") as HTMLTextAreaElement
+            board = textArea.value.split("\n")
+            printBoard(board)
+        }
+
         document.getElementById("right")?.addEventListener("click", rightEventListener)
         document.getElementById("left")?.addEventListener("click", leftEventListener)
         document.getElementById("up")?.addEventListener("click", upEventListener)
         document.getElementById("down")?.addEventListener("click", downEventListener)
+        document.getElementById("readBoard")?.addEventListener("click", updateBoardEventListener)
 
         window.addEventListener("keydown", {
             val event = it as KeyboardEvent
