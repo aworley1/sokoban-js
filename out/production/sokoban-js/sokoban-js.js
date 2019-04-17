@@ -22,7 +22,6 @@ this['sokoban-js'] = function (_, Kotlin) {
   var EventListener = Kotlin.org.w3c.dom.events.EventListener_gbr1zf$;
   var throwCCE = Kotlin.throwCCE;
   var split = Kotlin.kotlin.text.split_ip8yn$;
-  var appendText = Kotlin.kotlin.dom.appendText_46n0ku$;
   Direction.prototype = Object.create(Enum.prototype);
   Direction.prototype.constructor = Direction;
   SquareType.prototype = Object.create(Enum.prototype);
@@ -691,7 +690,6 @@ this['sokoban-js'] = function (_, Kotlin) {
   function main$lambda$lambda_3(it) {
     var tmp$;
     var textArea = Kotlin.isType(tmp$ = document.getElementById('board'), HTMLTextAreaElement) ? tmp$ : throwCCE();
-    console.log('Cooey');
     Game_getInstance().board = split(textArea.value, ['\n']);
     printBoard(Game_getInstance().board);
     return Unit;
@@ -739,11 +737,52 @@ this['sokoban-js'] = function (_, Kotlin) {
     printBoard(Game_getInstance().board);
     console.log('Hi!');
   }
+  var addAll = Kotlin.kotlin.collections.addAll_ipc267$;
   function printBoard(board) {
-    var pre = appendText(document.createElement('pre'), joinToString(board, '\n'));
+    var tmp$;
+    var $receiver = document.createElement('div');
+    $receiver.className = 'PlayerSquare';
+    var player = $receiver;
+    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+    $receiver_0.src = 'dog.svg';
+    var playerImage = $receiver_0;
+    player.appendChild(playerImage);
+    var destination = ArrayList_init_0();
+    var tmp$_0;
+    tmp$_0 = board.iterator();
+    while (tmp$_0.hasNext()) {
+      var element = tmp$_0.next();
+      var span = document.createElement('span');
+      var destination_0 = ArrayList_init(element.length);
+      var tmp$_1;
+      tmp$_1 = iterator(element);
+      while (tmp$_1.hasNext()) {
+        var item = unboxChar(tmp$_1.next());
+        var tmp$_2 = destination_0.add_11rb$;
+        var tmp$_3;
+        if (unboxChar(toBoxedChar(item)) === 112)
+          tmp$_3 = player;
+        else {
+          var $receiver_1 = document.createElement('div');
+          $receiver_1.className = 'EmptySquare';
+          tmp$_3 = $receiver_1;
+        }
+        var div = tmp$_3;
+        span.appendChild(div);
+        tmp$_2.call(destination_0, span);
+      }
+      var list = destination_0;
+      addAll(destination, list);
+    }
+    var spans = destination;
     var sokobanDiv = document.getElementById('sokoban');
     sokobanDiv != null ? (sokobanDiv.innerHTML = '') : null;
-    sokobanDiv != null ? sokobanDiv.appendChild(pre) : null;
+    var tmp$_4;
+    tmp$_4 = spans.iterator();
+    while (tmp$_4.hasNext()) {
+      var element_0 = tmp$_4.next();
+      sokobanDiv != null ? sokobanDiv.appendChild(element_0) : null;
+    }
   }
   Object.defineProperty(Direction, 'UP', {
     get: Direction$UP_getInstance

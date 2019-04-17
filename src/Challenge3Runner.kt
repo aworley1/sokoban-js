@@ -1,12 +1,12 @@
 package challenge_three
 
 import challenge_three.Game.board
+import org.w3c.dom.HTMLImageElement
 import org.w3c.dom.HTMLTextAreaElement
 import org.w3c.dom.events.EventListener
 import org.w3c.dom.events.KeyboardEvent
 import kotlin.browser.document
 import kotlin.browser.window
-import kotlin.dom.appendText
 
 object Game {
     var board: List<String> = emptyList()
@@ -77,9 +77,29 @@ fun main() {
 }
 
 fun printBoard(board: List<String>) {
-    val pre = document.createElement("pre").appendText(board.joinToString("\n"))
+    val player = document.createElement("div").apply { className = "PlayerSquare" }
+    val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
+    player.appendChild(playerImage)
+
+    val spans = board.flatMap {
+        val span = document.createElement("span")
+        it.map {
+            val div = when (it) {
+                'p' -> player
+                else -> document.createElement("div").apply { className = "EmptySquare" }
+            }
+            span.appendChild(div)
+            span
+        }
+    }
+
+//    val pre = document.createElement("pre").appendText(board.joinToString("\n"))
 
     val sokobanDiv = document.getElementById("sokoban")
+
     sokobanDiv?.innerHTML = ""
-    sokobanDiv?.appendChild(pre)
+    spans.forEach {
+        sokobanDiv?.appendChild(it)
+    }
+//    sokobanDiv?.appendChild(pre)
 }
