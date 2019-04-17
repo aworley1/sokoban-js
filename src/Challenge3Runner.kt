@@ -1,6 +1,7 @@
 package challenge_three
 
 import challenge_three.Game.board
+import org.w3c.dom.Element
 import org.w3c.dom.HTMLImageElement
 import org.w3c.dom.HTMLTextAreaElement
 import org.w3c.dom.events.EventListener
@@ -81,30 +82,44 @@ private fun setNewBoard(event: KeyboardEvent, c: Char) {
     board = processSokobanMove(board, c)
 }
 
-fun printBoard(board: List<String>) {
-    val player = document.createElement("div").apply { className = "PlayerSquare" }
+fun makeWallSquare(): Element {
+    val wall = document.createElement("div").apply { className = "Square" }
+    val wallImage = (document.createElement("img") as HTMLImageElement).apply { src = "bricks.svg" }
+    wall.appendChild(wallImage)
+    return wall
+}
+
+fun makePlayerSquare(): Element {
+    val player = document.createElement("div").apply { className = "Square" }
     val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
     player.appendChild(playerImage)
 
-    val spans = board.flatMap {
-        val span = document.createElement("span")
-        it.map {
-            val div = when (it) {
-                'p' -> player
-                else -> document.createElement("div").apply { className = "EmptySquare" }
+    return player
+}
+
+fun makeEmptySquare() = document.createElement("div").apply { className = "Square" }
+
+fun printBoard(board: List<String>) {
+    val sokobanDiv = document.getElementById("sokoban")
+
+    val boardArray = board.map {row ->
+        row.map {char ->
+            when (char) {
+                'p' -> makePlayerSquare()
+                '#' -> makeWallSquare()
+                else -> makeEmptySquare()
             }
-            span.appendChild(div)
-            span
         }
     }
 
-//    val pre = document.createElement("pre").appendText(board.joinToString("\n"))
-
-    val sokobanDiv = document.getElementById("sokoban")
 
     sokobanDiv?.innerHTML = ""
-    spans.forEach {
-        sokobanDiv?.appendChild(it)
+    boardArray.forEach {
+        val span = document.createElement("span")
+        it.forEach {
+            span.appendChild(it)
+            console.log(span)
+        }
+        sokobanDiv?.appendChild(span)
     }
-//    sokobanDiv?.appendChild(pre)
 }

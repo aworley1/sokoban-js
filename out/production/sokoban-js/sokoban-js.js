@@ -741,51 +741,81 @@ this['sokoban-js'] = function (_, Kotlin) {
     event.preventDefault();
     Game_getInstance().board = processSokobanMove(Game_getInstance().board, c);
   }
-  var addAll = Kotlin.kotlin.collections.addAll_ipc267$;
-  function printBoard(board) {
+  function makeWallSquare() {
     var tmp$;
     var $receiver = document.createElement('div');
-    $receiver.className = 'PlayerSquare';
+    $receiver.className = 'Square';
+    var wall = $receiver;
+    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+    $receiver_0.src = 'bricks.svg';
+    var wallImage = $receiver_0;
+    wall.appendChild(wallImage);
+    return wall;
+  }
+  function makePlayerSquare() {
+    var tmp$;
+    var $receiver = document.createElement('div');
+    $receiver.className = 'Square';
     var player = $receiver;
     var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
     $receiver_0.src = 'dog.svg';
     var playerImage = $receiver_0;
     player.appendChild(playerImage);
-    var destination = ArrayList_init_0();
-    var tmp$_0;
-    tmp$_0 = board.iterator();
-    while (tmp$_0.hasNext()) {
-      var element = tmp$_0.next();
-      var span = document.createElement('span');
-      var destination_0 = ArrayList_init(element.length);
-      var tmp$_1;
-      tmp$_1 = iterator(element);
-      while (tmp$_1.hasNext()) {
-        var item = unboxChar(tmp$_1.next());
-        var tmp$_2 = destination_0.add_11rb$;
-        var tmp$_3;
-        if (unboxChar(toBoxedChar(item)) === 112)
-          tmp$_3 = player;
-        else {
-          var $receiver_1 = document.createElement('div');
-          $receiver_1.className = 'EmptySquare';
-          tmp$_3 = $receiver_1;
-        }
-        var div = tmp$_3;
-        span.appendChild(div);
-        tmp$_2.call(destination_0, span);
-      }
-      var list = destination_0;
-      addAll(destination, list);
-    }
-    var spans = destination;
+    return player;
+  }
+  function makeEmptySquare() {
+    var $receiver = document.createElement('div');
+    $receiver.className = 'Square';
+    return $receiver;
+  }
+  function printBoard(board) {
     var sokobanDiv = document.getElementById('sokoban');
+    var destination = ArrayList_init(collectionSizeOrDefault(board, 10));
+    var tmp$;
+    tmp$ = board.iterator();
+    while (tmp$.hasNext()) {
+      var item = tmp$.next();
+      var tmp$_0 = destination.add_11rb$;
+      var destination_0 = ArrayList_init(item.length);
+      var tmp$_1;
+      tmp$_1 = iterator(item);
+      loop_label: while (tmp$_1.hasNext()) {
+        var item_0 = unboxChar(tmp$_1.next());
+        var tmp$_2 = destination_0.add_11rb$;
+        var char = toBoxedChar(item_0);
+        var transform$result;
+        transform$break: do {
+          switch (unboxChar(char)) {
+            case 112:
+              transform$result = makePlayerSquare();
+              break transform$break;
+            case 35:
+              transform$result = makeWallSquare();
+              break transform$break;
+            default:transform$result = makeEmptySquare();
+              break transform$break;
+          }
+        }
+         while (false);
+        tmp$_2.call(destination_0, transform$result);
+      }
+      tmp$_0.call(destination, destination_0);
+    }
+    var boardArray = destination;
     sokobanDiv != null ? (sokobanDiv.innerHTML = '') : null;
-    var tmp$_4;
-    tmp$_4 = spans.iterator();
-    while (tmp$_4.hasNext()) {
-      var element_0 = tmp$_4.next();
-      sokobanDiv != null ? sokobanDiv.appendChild(element_0) : null;
+    var tmp$_3;
+    tmp$_3 = boardArray.iterator();
+    while (tmp$_3.hasNext()) {
+      var element = tmp$_3.next();
+      var span = document.createElement('span');
+      var tmp$_4;
+      tmp$_4 = element.iterator();
+      while (tmp$_4.hasNext()) {
+        var element_0 = tmp$_4.next();
+        span.appendChild(element_0);
+        console.log(span);
+      }
+      sokobanDiv != null ? sokobanDiv.appendChild(span) : null;
     }
   }
   Object.defineProperty(Direction, 'UP', {
@@ -841,6 +871,9 @@ this['sokoban-js'] = function (_, Kotlin) {
     get: Game_getInstance
   });
   package$challenge_three.main = main;
+  package$challenge_three.makeWallSquare = makeWallSquare;
+  package$challenge_three.makePlayerSquare = makePlayerSquare;
+  package$challenge_three.makeEmptySquare = makeEmptySquare;
   package$challenge_three.printBoard_mhpeer$ = printBoard;
   main();
   Kotlin.defineModule('sokoban-js', _);
