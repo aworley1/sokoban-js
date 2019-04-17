@@ -763,9 +763,25 @@ this['sokoban-js'] = function (_, Kotlin) {
     player.appendChild(playerImage);
     return player;
   }
+  function makePlayerSquareOnStorageLocation() {
+    var tmp$;
+    var $receiver = document.createElement('div');
+    $receiver.className = 'Square StorageLocation';
+    var player = $receiver;
+    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+    $receiver_0.src = 'dog.svg';
+    var playerImage = $receiver_0;
+    player.appendChild(playerImage);
+    return player;
+  }
   function makeEmptySquare() {
     var $receiver = document.createElement('div');
     $receiver.className = 'Square';
+    return $receiver;
+  }
+  function makeStorageLocationSquare() {
+    var $receiver = document.createElement('div');
+    $receiver.className = 'Square StorageLocation';
     return $receiver;
   }
   function printBoard(board) {
@@ -791,6 +807,12 @@ this['sokoban-js'] = function (_, Kotlin) {
               break transform$break;
             case 35:
               transform$result = makeWallSquare();
+              break transform$break;
+            case 42:
+              transform$result = makeStorageLocationSquare();
+              break transform$break;
+            case 80:
+              transform$result = makePlayerSquareOnStorageLocation();
               break transform$break;
             default:transform$result = makeEmptySquare();
               break transform$break;
@@ -873,7 +895,9 @@ this['sokoban-js'] = function (_, Kotlin) {
   package$challenge_three.main = main;
   package$challenge_three.makeWallSquare = makeWallSquare;
   package$challenge_three.makePlayerSquare = makePlayerSquare;
+  package$challenge_three.makePlayerSquareOnStorageLocation = makePlayerSquareOnStorageLocation;
   package$challenge_three.makeEmptySquare = makeEmptySquare;
+  package$challenge_three.makeStorageLocationSquare = makeStorageLocationSquare;
   package$challenge_three.printBoard_mhpeer$ = printBoard;
   main();
   Kotlin.defineModule('sokoban-js', _);

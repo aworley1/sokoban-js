@@ -97,16 +97,28 @@ fun makePlayerSquare(): Element {
     return player
 }
 
+fun makePlayerSquareOnStorageLocation(): Element {
+    val player = document.createElement("div").apply { className = "Square StorageLocation" }
+    val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
+    player.appendChild(playerImage)
+
+    return player
+}
+
 fun makeEmptySquare() = document.createElement("div").apply { className = "Square" }
+
+fun makeStorageLocationSquare() = document.createElement("div").apply { className = "Square StorageLocation" }
 
 fun printBoard(board: List<String>) {
     val sokobanDiv = document.getElementById("sokoban")
 
-    val boardArray = board.map {row ->
-        row.map {char ->
+    val boardArray = board.map { row ->
+        row.map { char ->
             when (char) {
                 'p' -> makePlayerSquare()
                 '#' -> makeWallSquare()
+                '*' -> makeStorageLocationSquare()
+                'P' -> makePlayerSquareOnStorageLocation()
                 else -> makeEmptySquare()
             }
         }
