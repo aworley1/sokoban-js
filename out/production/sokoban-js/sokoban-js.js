@@ -763,6 +763,28 @@ this['sokoban-js'] = function (_, Kotlin) {
     player.appendChild(playerImage);
     return player;
   }
+  function makeBoxSquare() {
+    var tmp$;
+    var $receiver = document.createElement('div');
+    $receiver.className = 'Square';
+    var box = $receiver;
+    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+    $receiver_0.src = 'bone.svg';
+    var boxImage = $receiver_0;
+    box.appendChild(boxImage);
+    return box;
+  }
+  function makeBoxSquareOnStorageLocation() {
+    var tmp$;
+    var $receiver = document.createElement('div');
+    $receiver.className = 'Square StorageLocation';
+    var box = $receiver;
+    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+    $receiver_0.src = 'bone.svg';
+    var boxImage = $receiver_0;
+    box.appendChild(boxImage);
+    return box;
+  }
   function makePlayerSquareOnStorageLocation() {
     var tmp$;
     var $receiver = document.createElement('div');
@@ -813,6 +835,12 @@ this['sokoban-js'] = function (_, Kotlin) {
               break transform$break;
             case 80:
               transform$result = makePlayerSquareOnStorageLocation();
+              break transform$break;
+            case 98:
+              transform$result = makeBoxSquare();
+              break transform$break;
+            case 66:
+              transform$result = makeBoxSquareOnStorageLocation();
               break transform$break;
             default:transform$result = makeEmptySquare();
               break transform$break;
@@ -895,6 +923,8 @@ this['sokoban-js'] = function (_, Kotlin) {
   package$challenge_three.main = main;
   package$challenge_three.makeWallSquare = makeWallSquare;
   package$challenge_three.makePlayerSquare = makePlayerSquare;
+  package$challenge_three.makeBoxSquare = makeBoxSquare;
+  package$challenge_three.makeBoxSquareOnStorageLocation = makeBoxSquareOnStorageLocation;
   package$challenge_three.makePlayerSquareOnStorageLocation = makePlayerSquareOnStorageLocation;
   package$challenge_three.makeEmptySquare = makeEmptySquare;
   package$challenge_three.makeStorageLocationSquare = makeStorageLocationSquare;

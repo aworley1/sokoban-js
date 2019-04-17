@@ -97,6 +97,22 @@ fun makePlayerSquare(): Element {
     return player
 }
 
+fun makeBoxSquare(): Element {
+    val box = document.createElement("div").apply { className = "Square" }
+    val boxImage = (document.createElement("img") as HTMLImageElement).apply { src = "bone.svg" }
+    box.appendChild(boxImage)
+
+    return box
+}
+
+fun makeBoxSquareOnStorageLocation(): Element {
+    val box = document.createElement("div").apply { className = "Square StorageLocation" }
+    val boxImage = (document.createElement("img") as HTMLImageElement).apply { src = "bone.svg" }
+    box.appendChild(boxImage)
+
+    return box
+}
+
 fun makePlayerSquareOnStorageLocation(): Element {
     val player = document.createElement("div").apply { className = "Square StorageLocation" }
     val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
@@ -119,6 +135,8 @@ fun printBoard(board: List<String>) {
                 '#' -> makeWallSquare()
                 '*' -> makeStorageLocationSquare()
                 'P' -> makePlayerSquareOnStorageLocation()
+                'b' -> makeBoxSquare()
+                'B' -> makeBoxSquareOnStorageLocation()
                 else -> makeEmptySquare()
             }
         }
