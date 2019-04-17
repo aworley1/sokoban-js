@@ -39,34 +39,17 @@ fun main() {
     window.onload = {
         printBoard(board)
 
-        val rightEventListener = EventListener {
-            board = processSokobanMove(board, 'r')
-            printBoard(board)
-        }
-        val leftEventListener = EventListener {
-            board = processSokobanMove(board, 'l')
-            printBoard(board)
-        }
-        val upEventListener = EventListener {
-            board = processSokobanMove(board, 'u')
-            printBoard(board)
-        }
-        val downEventListener = EventListener {
-            board = processSokobanMove(board, 'd')
-            printBoard(board)
-        }
-
         val updateBoardEventListener = EventListener {
             val textArea = document.getElementById("board") as HTMLTextAreaElement
             board = textArea.value.split("\n")
             printBoard(board)
         }
 
-        document.getElementById("right")?.addEventListener("click", rightEventListener)
-        document.getElementById("left")?.addEventListener("click", leftEventListener)
-        document.getElementById("up")?.addEventListener("click", upEventListener)
-        document.getElementById("down")?.addEventListener("click", downEventListener)
-        document.getElementById("readBoard")?.addEventListener("click", updateBoardEventListener)
+        addClickEventListener("right", createMoveEventListener('r'))
+        addClickEventListener("left", createMoveEventListener('l'))
+        addClickEventListener("up", createMoveEventListener('u'))
+        addClickEventListener("down", createMoveEventListener('d'))
+        addClickEventListener("readBoard", updateBoardEventListener)
 
         window.addEventListener("keydown", {
             val event = it as KeyboardEvent
@@ -86,53 +69,32 @@ fun main() {
 
 }
 
+private fun createMoveEventListener(direction: Char): EventListener {
+    return EventListener {
+        board = processSokobanMove(board, direction)
+        printBoard(board)
+    }
+}
+
+private fun addClickEventListener(elementId: String, eventListener: EventListener) {
+    document.getElementById(elementId)?.addEventListener("click", eventListener)
+}
+
 private fun setNewBoard(event: KeyboardEvent, c: Char) {
     event.preventDefault()
     board = processSokobanMove(board, c)
 }
 
-fun makeWallSquare(): Element {
-    val wall = document.createElement("span").apply { className = "square" }
-    val wallImage = (document.createElement("img") as HTMLImageElement).apply { src = "bricks.svg" }
-    wall.appendChild(wallImage)
-    return wall
+fun makeSquare(storageLocation: Boolean, image: String?): Element {
+    val squareClass = if (storageLocation) "square storage-location" else "square"
+    val square = document.createElement("span").apply { className = squareClass }
+    val squareImage = if (image != null) (document.createElement("img") as HTMLImageElement).apply { src = image }
+    else null
+
+    squareImage?.let { square.appendChild(squareImage) }
+
+    return square
 }
-
-fun makePlayerSquare(): Element {
-    val player = document.createElement("span").apply { className = "square" }
-    val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
-    player.appendChild(playerImage)
-
-    return player
-}
-
-fun makeBoxSquare(): Element {
-    val box = document.createElement("span").apply { className = "square" }
-    val boxImage = (document.createElement("img") as HTMLImageElement).apply { src = "bone.svg" }
-    box.appendChild(boxImage)
-
-    return box
-}
-
-fun makeBoxSquareOnStorageLocation(): Element {
-    val box = document.createElement("span").apply { className = "square storage-location" }
-    val boxImage = (document.createElement("img") as HTMLImageElement).apply { src = "bone.svg" }
-    box.appendChild(boxImage)
-
-    return box
-}
-
-fun makePlayerSquareOnStorageLocation(): Element {
-    val player = document.createElement("span").apply { className = "square storage-location" }
-    val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
-    player.appendChild(playerImage)
-
-    return player
-}
-
-fun makeEmptySquare() = document.createElement("span").apply { className = "square" }
-
-fun makeStorageLocationSquare() = document.createElement("span").apply { className = "square storage-location" }
 
 fun printBoard(board: List<String>) {
     val sokobanDiv = document.getElementById("sokoban")
@@ -140,17 +102,16 @@ fun printBoard(board: List<String>) {
     val boardArray = board.map { row ->
         row.map { char ->
             when (char) {
-                'p' -> makePlayerSquare()
-                '#' -> makeWallSquare()
-                '*' -> makeStorageLocationSquare()
-                'P' -> makePlayerSquareOnStorageLocation()
-                'b' -> makeBoxSquare()
-                'B' -> makeBoxSquareOnStorageLocation()
-                else -> makeEmptySquare()
+                'p' -> makeSquare(false, "dog.svg")
+                '#' -> makeSquare(false, "bricks.svg")
+                '*' -> makeSquare(true, null)
+                'P' -> makeSquare(true, "dog.svg")
+                'b' -> makeSquare(false, "bone.svg")
+                'B' -> makeSquare(true, "bone.svg")
+                else -> makeSquare(false, null)
             }
         }
     }
-
 
     sokobanDiv?.innerHTML = ""
     boardArray.forEach {

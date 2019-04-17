@@ -18,10 +18,10 @@ this['sokoban-js'] = function (_, Kotlin) {
   var Exception = Kotlin.kotlin.Exception;
   var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
   var listOf = Kotlin.kotlin.collections.listOf_i5x0yv$;
-  var Unit = Kotlin.kotlin.Unit;
-  var EventListener = Kotlin.org.w3c.dom.events.EventListener_gbr1zf$;
   var throwCCE = Kotlin.throwCCE;
   var split = Kotlin.kotlin.text.split_ip8yn$;
+  var Unit = Kotlin.kotlin.Unit;
+  var EventListener = Kotlin.org.w3c.dom.events.EventListener_gbr1zf$;
   Direction.prototype = Object.create(Enum.prototype);
   Direction.prototype.constructor = Direction;
   SquareType.prototype = Object.create(Enum.prototype);
@@ -668,33 +668,13 @@ this['sokoban-js'] = function (_, Kotlin) {
     return Game_instance;
   }
   function main$lambda$lambda(it) {
-    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 114);
-    printBoard(Game_getInstance().board);
-    return Unit;
-  }
-  function main$lambda$lambda_0(it) {
-    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 108);
-    printBoard(Game_getInstance().board);
-    return Unit;
-  }
-  function main$lambda$lambda_1(it) {
-    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 117);
-    printBoard(Game_getInstance().board);
-    return Unit;
-  }
-  function main$lambda$lambda_2(it) {
-    Game_getInstance().board = processSokobanMove(Game_getInstance().board, 100);
-    printBoard(Game_getInstance().board);
-    return Unit;
-  }
-  function main$lambda$lambda_3(it) {
     var tmp$;
     var textArea = Kotlin.isType(tmp$ = document.getElementById('board'), HTMLTextAreaElement) ? tmp$ : throwCCE();
     Game_getInstance().board = split(textArea.value, ['\n']);
     printBoard(Game_getInstance().board);
     return Unit;
   }
-  function main$lambda$lambda_4(it) {
+  function main$lambda$lambda_0(it) {
     var tmp$;
     var event = Kotlin.isType(tmp$ = it, KeyboardEvent) ? tmp$ : throwCCE();
     switch (event.keyCode) {
@@ -715,19 +695,14 @@ this['sokoban-js'] = function (_, Kotlin) {
     return Unit;
   }
   function main$lambda(it) {
-    var tmp$, tmp$_0, tmp$_1, tmp$_2, tmp$_3;
     printBoard(Game_getInstance().board);
-    var rightEventListener = EventListener(main$lambda$lambda);
-    var leftEventListener = EventListener(main$lambda$lambda_0);
-    var upEventListener = EventListener(main$lambda$lambda_1);
-    var downEventListener = EventListener(main$lambda$lambda_2);
-    var updateBoardEventListener = EventListener(main$lambda$lambda_3);
-    (tmp$ = document.getElementById('right')) != null ? (tmp$.addEventListener('click', rightEventListener), Unit) : null;
-    (tmp$_0 = document.getElementById('left')) != null ? (tmp$_0.addEventListener('click', leftEventListener), Unit) : null;
-    (tmp$_1 = document.getElementById('up')) != null ? (tmp$_1.addEventListener('click', upEventListener), Unit) : null;
-    (tmp$_2 = document.getElementById('down')) != null ? (tmp$_2.addEventListener('click', downEventListener), Unit) : null;
-    (tmp$_3 = document.getElementById('readBoard')) != null ? (tmp$_3.addEventListener('click', updateBoardEventListener), Unit) : null;
-    window.addEventListener('keydown', main$lambda$lambda_4);
+    var updateBoardEventListener = EventListener(main$lambda$lambda);
+    addClickEventListener('right', createMoveEventListener(114));
+    addClickEventListener('left', createMoveEventListener(108));
+    addClickEventListener('up', createMoveEventListener(117));
+    addClickEventListener('down', createMoveEventListener(100));
+    addClickEventListener('readBoard', updateBoardEventListener);
+    window.addEventListener('keydown', main$lambda$lambda_0);
     return Unit;
   }
   function main() {
@@ -737,74 +712,43 @@ this['sokoban-js'] = function (_, Kotlin) {
     printBoard(Game_getInstance().board);
     console.log('Hi!');
   }
+  function createMoveEventListener$lambda(closure$direction) {
+    return function (it) {
+      Game_getInstance().board = processSokobanMove(Game_getInstance().board, closure$direction);
+      printBoard(Game_getInstance().board);
+      return Unit;
+    };
+  }
+  function createMoveEventListener(direction) {
+    return EventListener(createMoveEventListener$lambda(direction));
+  }
+  function addClickEventListener(elementId, eventListener) {
+    var tmp$;
+    (tmp$ = document.getElementById(elementId)) != null ? (tmp$.addEventListener('click', eventListener), Unit) : null;
+  }
   function setNewBoard(event, c) {
     event.preventDefault();
     Game_getInstance().board = processSokobanMove(Game_getInstance().board, c);
   }
-  function makeWallSquare() {
+  function makeSquare(storageLocation, image) {
     var tmp$;
+    var squareClass = storageLocation ? 'square storage-location' : 'square';
     var $receiver = document.createElement('span');
-    $receiver.className = 'square';
-    var wall = $receiver;
-    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
-    $receiver_0.src = 'bricks.svg';
-    var wallImage = $receiver_0;
-    wall.appendChild(wallImage);
-    return wall;
-  }
-  function makePlayerSquare() {
-    var tmp$;
-    var $receiver = document.createElement('span');
-    $receiver.className = 'square';
-    var player = $receiver;
-    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
-    $receiver_0.src = 'dog.svg';
-    var playerImage = $receiver_0;
-    player.appendChild(playerImage);
-    return player;
-  }
-  function makeBoxSquare() {
-    var tmp$;
-    var $receiver = document.createElement('span');
-    $receiver.className = 'square';
-    var box = $receiver;
-    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
-    $receiver_0.src = 'bone.svg';
-    var boxImage = $receiver_0;
-    box.appendChild(boxImage);
-    return box;
-  }
-  function makeBoxSquareOnStorageLocation() {
-    var tmp$;
-    var $receiver = document.createElement('span');
-    $receiver.className = 'square storage-location';
-    var box = $receiver;
-    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
-    $receiver_0.src = 'bone.svg';
-    var boxImage = $receiver_0;
-    box.appendChild(boxImage);
-    return box;
-  }
-  function makePlayerSquareOnStorageLocation() {
-    var tmp$;
-    var $receiver = document.createElement('span');
-    $receiver.className = 'square storage-location';
-    var player = $receiver;
-    var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
-    $receiver_0.src = 'dog.svg';
-    var playerImage = $receiver_0;
-    player.appendChild(playerImage);
-    return player;
-  }
-  function makeEmptySquare() {
-    var $receiver = document.createElement('span');
-    $receiver.className = 'square';
-    return $receiver;
-  }
-  function makeStorageLocationSquare() {
-    var $receiver = document.createElement('span');
-    $receiver.className = 'square storage-location';
-    return $receiver;
+    $receiver.className = squareClass;
+    var square = $receiver;
+    var tmp$_0;
+    if (image != null) {
+      var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
+      $receiver_0.src = image;
+      tmp$_0 = $receiver_0;
+    }
+     else
+      tmp$_0 = null;
+    var squareImage = tmp$_0;
+    if (squareImage != null) {
+      square.appendChild(squareImage);
+    }
+    return square;
   }
   function printBoard(board) {
     var sokobanDiv = document.getElementById('sokoban');
@@ -825,24 +769,24 @@ this['sokoban-js'] = function (_, Kotlin) {
         transform$break: do {
           switch (unboxChar(char)) {
             case 112:
-              transform$result = makePlayerSquare();
+              transform$result = makeSquare(false, 'dog.svg');
               break transform$break;
             case 35:
-              transform$result = makeWallSquare();
+              transform$result = makeSquare(false, 'bricks.svg');
               break transform$break;
             case 42:
-              transform$result = makeStorageLocationSquare();
+              transform$result = makeSquare(true, null);
               break transform$break;
             case 80:
-              transform$result = makePlayerSquareOnStorageLocation();
+              transform$result = makeSquare(true, 'dog.svg');
               break transform$break;
             case 98:
-              transform$result = makeBoxSquare();
+              transform$result = makeSquare(false, 'bone.svg');
               break transform$break;
             case 66:
-              transform$result = makeBoxSquareOnStorageLocation();
+              transform$result = makeSquare(true, 'bone.svg');
               break transform$break;
-            default:transform$result = makeEmptySquare();
+            default:transform$result = makeSquare(false, null);
               break transform$break;
           }
         }
@@ -920,13 +864,7 @@ this['sokoban-js'] = function (_, Kotlin) {
     get: Game_getInstance
   });
   package$challenge_three.main = main;
-  package$challenge_three.makeWallSquare = makeWallSquare;
-  package$challenge_three.makePlayerSquare = makePlayerSquare;
-  package$challenge_three.makeBoxSquare = makeBoxSquare;
-  package$challenge_three.makeBoxSquareOnStorageLocation = makeBoxSquareOnStorageLocation;
-  package$challenge_three.makePlayerSquareOnStorageLocation = makePlayerSquareOnStorageLocation;
-  package$challenge_three.makeEmptySquare = makeEmptySquare;
-  package$challenge_three.makeStorageLocationSquare = makeStorageLocationSquare;
+  package$challenge_three.makeSquare_ifx8ge$ = makeSquare;
   package$challenge_three.printBoard_mhpeer$ = printBoard;
   main();
   Kotlin.defineModule('sokoban-js', _);
