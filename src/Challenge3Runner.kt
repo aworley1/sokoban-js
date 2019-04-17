@@ -61,10 +61,10 @@ fun main() {
         window.addEventListener("keydown", {
             val event = it as KeyboardEvent
             when (event.keyCode) {
-                38 -> board = processSokobanMove(board, 'u')
-                40 -> board = processSokobanMove(board, 'd')
-                37 -> board = processSokobanMove(board, 'l')
-                39 -> board = processSokobanMove(board, 'r')
+                38 -> setNewBoard(event, 'u')
+                40 -> setNewBoard(event, 'd')
+                37 -> setNewBoard(event, 'l')
+                39 -> setNewBoard(event, 'r')
             }
             printBoard(board)
         })
@@ -74,6 +74,11 @@ fun main() {
     printBoard(board)
     console.log("Hi!")
 
+}
+
+private fun setNewBoard(event: KeyboardEvent, c: Char) {
+    event.preventDefault()
+    board = processSokobanMove(board, c)
 }
 
 fun printBoard(board: List<String>) {

@@ -699,16 +699,16 @@ this['sokoban-js'] = function (_, Kotlin) {
     var event = Kotlin.isType(tmp$ = it, KeyboardEvent) ? tmp$ : throwCCE();
     switch (event.keyCode) {
       case 38:
-        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 117);
+        setNewBoard(event, 117);
         break;
       case 40:
-        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 100);
+        setNewBoard(event, 100);
         break;
       case 37:
-        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 108);
+        setNewBoard(event, 108);
         break;
       case 39:
-        Game_getInstance().board = processSokobanMove(Game_getInstance().board, 114);
+        setNewBoard(event, 114);
         break;
     }
     printBoard(Game_getInstance().board);
@@ -736,6 +736,10 @@ this['sokoban-js'] = function (_, Kotlin) {
     window.onload = main$lambda;
     printBoard(Game_getInstance().board);
     console.log('Hi!');
+  }
+  function setNewBoard(event, c) {
+    event.preventDefault();
+    Game_getInstance().board = processSokobanMove(Game_getInstance().board, c);
   }
   var addAll = Kotlin.kotlin.collections.addAll_ipc267$;
   function printBoard(board) {
