@@ -731,7 +731,7 @@ this['sokoban-js'] = function (_, Kotlin) {
     return Unit;
   }
   function main() {
-    var initialBoard = listOf(['#######################', '#pb                *  #', '#                  #  #', '# b                #  #', '#         *        #  #', '#                  #  #', '#                  #  #', '#######################']);
+    var initialBoard = listOf(['############################', '#                          #', '#  *     p            *    #', '#                          #', '#              b           #', '#                          #', '#  b       ######          #', '#          #    #          #', '#          #  * #          #', '#          # b* #    b     #', '#  b       #    #          #', '#          ## ###          #', '#                   # #    #', '#                   #*#    #', '#                   ###    #', '############################']);
     Game_getInstance().board = initialBoard;
     window.onload = main$lambda;
     printBoard(Game_getInstance().board);
@@ -743,8 +743,8 @@ this['sokoban-js'] = function (_, Kotlin) {
   }
   function makeWallSquare() {
     var tmp$;
-    var $receiver = document.createElement('div');
-    $receiver.className = 'Square';
+    var $receiver = document.createElement('span');
+    $receiver.className = 'square';
     var wall = $receiver;
     var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
     $receiver_0.src = 'bricks.svg';
@@ -754,8 +754,8 @@ this['sokoban-js'] = function (_, Kotlin) {
   }
   function makePlayerSquare() {
     var tmp$;
-    var $receiver = document.createElement('div');
-    $receiver.className = 'Square';
+    var $receiver = document.createElement('span');
+    $receiver.className = 'square';
     var player = $receiver;
     var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
     $receiver_0.src = 'dog.svg';
@@ -765,8 +765,8 @@ this['sokoban-js'] = function (_, Kotlin) {
   }
   function makeBoxSquare() {
     var tmp$;
-    var $receiver = document.createElement('div');
-    $receiver.className = 'Square';
+    var $receiver = document.createElement('span');
+    $receiver.className = 'square';
     var box = $receiver;
     var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
     $receiver_0.src = 'bone.svg';
@@ -776,8 +776,8 @@ this['sokoban-js'] = function (_, Kotlin) {
   }
   function makeBoxSquareOnStorageLocation() {
     var tmp$;
-    var $receiver = document.createElement('div');
-    $receiver.className = 'Square StorageLocation';
+    var $receiver = document.createElement('span');
+    $receiver.className = 'square storage-location';
     var box = $receiver;
     var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
     $receiver_0.src = 'bone.svg';
@@ -787,8 +787,8 @@ this['sokoban-js'] = function (_, Kotlin) {
   }
   function makePlayerSquareOnStorageLocation() {
     var tmp$;
-    var $receiver = document.createElement('div');
-    $receiver.className = 'Square StorageLocation';
+    var $receiver = document.createElement('span');
+    $receiver.className = 'square storage-location';
     var player = $receiver;
     var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
     $receiver_0.src = 'dog.svg';
@@ -797,13 +797,13 @@ this['sokoban-js'] = function (_, Kotlin) {
     return player;
   }
   function makeEmptySquare() {
-    var $receiver = document.createElement('div');
-    $receiver.className = 'Square';
+    var $receiver = document.createElement('span');
+    $receiver.className = 'square';
     return $receiver;
   }
   function makeStorageLocationSquare() {
-    var $receiver = document.createElement('div');
-    $receiver.className = 'Square StorageLocation';
+    var $receiver = document.createElement('span');
+    $receiver.className = 'square storage-location';
     return $receiver;
   }
   function printBoard(board) {
@@ -857,15 +857,14 @@ this['sokoban-js'] = function (_, Kotlin) {
     tmp$_3 = boardArray.iterator();
     while (tmp$_3.hasNext()) {
       var element = tmp$_3.next();
-      var span = document.createElement('span');
+      var row = document.createElement('div');
       var tmp$_4;
       tmp$_4 = element.iterator();
       while (tmp$_4.hasNext()) {
         var element_0 = tmp$_4.next();
-        span.appendChild(element_0);
-        console.log(span);
+        row.appendChild(element_0);
       }
-      sokobanDiv != null ? sokobanDiv.appendChild(span) : null;
+      sokobanDiv != null ? sokobanDiv.appendChild(row) : null;
     }
   }
   Object.defineProperty(Direction, 'UP', {

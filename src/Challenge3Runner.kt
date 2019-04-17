@@ -15,14 +15,23 @@ object Game {
 
 fun main() {
     val initialBoard = listOf(
-            "#######################",
-            "#pb                *  #",
-            "#                  #  #",
-            "# b                #  #",
-            "#         *        #  #",
-            "#                  #  #",
-            "#                  #  #",
-            "#######################"
+            "############################",
+            "#                          #",
+            "#  *     p            *    #",
+            "#                          #",
+            "#              b           #",
+            "#                          #",
+            "#  b       ######          #",
+            "#          #    #          #",
+            "#          #  * #          #",
+            "#          # b* #    b     #",
+            "#  b       #    #          #",
+            "#          ## ###          #",
+            "#                   # #    #",
+            "#                   #*#    #",
+            "#                   ###    #",
+            "############################"
+
     )
 
     Game.board = initialBoard
@@ -83,14 +92,14 @@ private fun setNewBoard(event: KeyboardEvent, c: Char) {
 }
 
 fun makeWallSquare(): Element {
-    val wall = document.createElement("div").apply { className = "Square" }
+    val wall = document.createElement("span").apply { className = "square" }
     val wallImage = (document.createElement("img") as HTMLImageElement).apply { src = "bricks.svg" }
     wall.appendChild(wallImage)
     return wall
 }
 
 fun makePlayerSquare(): Element {
-    val player = document.createElement("div").apply { className = "Square" }
+    val player = document.createElement("span").apply { className = "square" }
     val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
     player.appendChild(playerImage)
 
@@ -98,7 +107,7 @@ fun makePlayerSquare(): Element {
 }
 
 fun makeBoxSquare(): Element {
-    val box = document.createElement("div").apply { className = "Square" }
+    val box = document.createElement("span").apply { className = "square" }
     val boxImage = (document.createElement("img") as HTMLImageElement).apply { src = "bone.svg" }
     box.appendChild(boxImage)
 
@@ -106,7 +115,7 @@ fun makeBoxSquare(): Element {
 }
 
 fun makeBoxSquareOnStorageLocation(): Element {
-    val box = document.createElement("div").apply { className = "Square StorageLocation" }
+    val box = document.createElement("span").apply { className = "square storage-location" }
     val boxImage = (document.createElement("img") as HTMLImageElement).apply { src = "bone.svg" }
     box.appendChild(boxImage)
 
@@ -114,16 +123,16 @@ fun makeBoxSquareOnStorageLocation(): Element {
 }
 
 fun makePlayerSquareOnStorageLocation(): Element {
-    val player = document.createElement("div").apply { className = "Square StorageLocation" }
+    val player = document.createElement("span").apply { className = "square storage-location" }
     val playerImage = (document.createElement("img") as HTMLImageElement).apply { src = "dog.svg" }
     player.appendChild(playerImage)
 
     return player
 }
 
-fun makeEmptySquare() = document.createElement("div").apply { className = "Square" }
+fun makeEmptySquare() = document.createElement("span").apply { className = "square" }
 
-fun makeStorageLocationSquare() = document.createElement("div").apply { className = "Square StorageLocation" }
+fun makeStorageLocationSquare() = document.createElement("span").apply { className = "square storage-location" }
 
 fun printBoard(board: List<String>) {
     val sokobanDiv = document.getElementById("sokoban")
@@ -145,11 +154,10 @@ fun printBoard(board: List<String>) {
 
     sokobanDiv?.innerHTML = ""
     boardArray.forEach {
-        val span = document.createElement("span")
+        val row = document.createElement("div")
         it.forEach {
-            span.appendChild(it)
-            console.log(span)
+            row.appendChild(it)
         }
-        sokobanDiv?.appendChild(span)
+        sokobanDiv?.appendChild(row)
     }
 }
