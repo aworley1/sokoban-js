@@ -63,10 +63,6 @@ fun main() {
         })
 
     }
-
-    printBoard(board)
-    console.log("Hi!")
-
 }
 
 private fun createMoveEventListener(direction: Char): EventListener {
@@ -88,10 +84,8 @@ private fun setNewBoard(event: KeyboardEvent, c: Char) {
 fun makeSquare(storageLocation: Boolean, image: String?): Element {
     val squareClass = if (storageLocation) "square storage-location" else "square"
     val square = document.createElement("span").apply { className = squareClass }
-    val squareImage = if (image != null) (document.createElement("img") as HTMLImageElement).apply { src = image }
-    else null
 
-    squareImage?.let { square.appendChild(squareImage) }
+    image?.let { square.appendChild((document.createElement("img") as HTMLImageElement).apply { src = image }) }
 
     return square
 }
