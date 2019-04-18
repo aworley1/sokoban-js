@@ -91,6 +91,7 @@ fun makeSquare(storageLocation: Boolean, image: String?): Element {
 }
 
 fun printBoard(board: List<String>) {
+    val youHaveWon = document.createElement("h1").apply { textContent = "YOU HAVE WON!!!" }
     val sokobanDiv = document.getElementById("sokoban")
 
     val boardArray = board.map { row ->
@@ -108,6 +109,7 @@ fun printBoard(board: List<String>) {
     }
 
     sokobanDiv?.innerHTML = ""
+    if (hasPlayerWon(board)) sokobanDiv?.appendChild(youHaveWon)
     boardArray.forEach {
         val row = document.createElement("div")
         it.forEach {

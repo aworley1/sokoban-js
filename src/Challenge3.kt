@@ -1,12 +1,6 @@
 package challenge_three
 
-import challenge_three.SquareType.BOX
-import challenge_three.SquareType.EMPTY
-import challenge_three.SquareType.PLAYER
-import challenge_three.SquareType.STORAGE_LOCATION
-import challenge_three.SquareType.STORAGE_LOCATION_WITH_BOX
-import challenge_three.SquareType.STORAGE_LOCATION_WITH_PLAYER
-import challenge_three.SquareType.WALL
+import challenge_three.SquareType.*
 
 enum class Direction(val code: Char, val verticalMovement: Int, val horizontalMovement: Int) {
     UP('U', -1, 0),
@@ -185,6 +179,10 @@ fun processSokobanMove(input: List<String>, move: Char): List<String> {
     } catch (ex: IllegalMoveException) {
         board.toArray()
     }
+}
+
+fun hasPlayerWon(board: List<String>): Boolean {
+    return !board.joinToString("").contains('b')
 }
 
 class IllegalMoveException(override val message: String) : Exception()

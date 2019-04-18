@@ -14,6 +14,7 @@ this['sokoban-js'] = function (_, Kotlin) {
   var plus = Kotlin.kotlin.collections.plus_qloxvw$;
   var flatten = Kotlin.kotlin.collections.flatten_u0ad8z$;
   var IllegalArgumentException_init = Kotlin.kotlin.IllegalArgumentException_init_pdl1vj$;
+  var contains = Kotlin.kotlin.text.contains_sgbm27$;
   var Exception_init = Kotlin.kotlin.Exception_init;
   var Exception = Kotlin.kotlin.Exception;
   var emptyList = Kotlin.kotlin.collections.emptyList_287e2$;
@@ -636,6 +637,9 @@ this['sokoban-js'] = function (_, Kotlin) {
     }
     return tmp$_0;
   }
+  function hasPlayerWon(board) {
+    return !contains(joinToString(board, ''), 98);
+  }
   function IllegalMoveException(message) {
     Exception_init(this);
     this.message_nytkct$_0 = message;
@@ -709,8 +713,6 @@ this['sokoban-js'] = function (_, Kotlin) {
     var initialBoard = listOf(['############################', '#                          #', '#  *     p            *    #', '#                          #', '#              b           #', '#                          #', '#  b       ######          #', '#          #    #          #', '#          #  * #          #', '#          # b* #    b     #', '#  b       #    #          #', '#          ## ###          #', '#                   # #    #', '#                   #*#    #', '#                   ###    #', '############################']);
     Game_getInstance().board = initialBoard;
     window.onload = main$lambda;
-    printBoard(Game_getInstance().board);
-    console.log('Hi!');
   }
   function createMoveEventListener$lambda(closure$direction) {
     return function (it) {
@@ -731,26 +733,22 @@ this['sokoban-js'] = function (_, Kotlin) {
     Game_getInstance().board = processSokobanMove(Game_getInstance().board, c);
   }
   function makeSquare(storageLocation, image) {
-    var tmp$;
     var squareClass = storageLocation ? 'square storage-location' : 'square';
     var $receiver = document.createElement('span');
     $receiver.className = squareClass;
     var square = $receiver;
-    var tmp$_0;
     if (image != null) {
+      var tmp$;
       var $receiver_0 = Kotlin.isType(tmp$ = document.createElement('img'), HTMLImageElement) ? tmp$ : throwCCE();
       $receiver_0.src = image;
-      tmp$_0 = $receiver_0;
-    }
-     else
-      tmp$_0 = null;
-    var squareImage = tmp$_0;
-    if (squareImage != null) {
-      square.appendChild(squareImage);
+      square.appendChild($receiver_0);
     }
     return square;
   }
   function printBoard(board) {
+    var $receiver = document.createElement('h1');
+    $receiver.textContent = 'YOU HAVE WON!!!';
+    var youHaveWon = $receiver;
     var sokobanDiv = document.getElementById('sokoban');
     var destination = ArrayList_init(collectionSizeOrDefault(board, 10));
     var tmp$;
@@ -797,6 +795,8 @@ this['sokoban-js'] = function (_, Kotlin) {
     }
     var boardArray = destination;
     sokobanDiv != null ? (sokobanDiv.innerHTML = '') : null;
+    if (hasPlayerWon(board))
+      sokobanDiv != null ? sokobanDiv.appendChild(youHaveWon) : null;
     var tmp$_3;
     tmp$_3 = boardArray.iterator();
     while (tmp$_3.hasNext()) {
@@ -859,6 +859,7 @@ this['sokoban-js'] = function (_, Kotlin) {
   });
   package$challenge_three.SquareType = SquareType;
   package$challenge_three.processSokobanMove_ilwz0q$ = processSokobanMove;
+  package$challenge_three.hasPlayerWon_mhpeer$ = hasPlayerWon;
   package$challenge_three.IllegalMoveException = IllegalMoveException;
   Object.defineProperty(package$challenge_three, 'Game', {
     get: Game_getInstance
