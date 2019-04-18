@@ -16,7 +16,8 @@ enum class Direction(val code: Char, val verticalMovement: Int, val horizontalMo
 }
 
 data class Board(val squares: List<Square>) {
-    fun toArray(): List<String> {
+    fun toList(): List<String> {
+        //not using toSortedMap because it's not supported in Kotlin/JS
         val sortedRows = squares.groupBy { it.row }
                 .toList()
                 .sortedBy { it.first }
@@ -172,12 +173,12 @@ enum class SquareType(val code: Char, val isPlayer: Boolean, val isBox: Boolean)
 
 fun processSokobanMove(input: List<String>, move: Char): List<String> {
     val board = Board.from(input)
-    val direction = Direction.of(move.toUpperCase()) ?: return board.toArray()
+    val direction = Direction.of(move.toUpperCase()) ?: return board.toList()
 
     return try {
-        board.move(direction).toArray()
+        board.move(direction).toList()
     } catch (ex: IllegalMoveException) {
-        board.toArray()
+        board.toList()
     }
 }
 
